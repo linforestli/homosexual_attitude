@@ -1,14 +1,15 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Americans' Attitudes Toward The Employment of Homosexual Individuals in Colleges or Universities"
+subtitle: "[one sentence of the findings from the paper]"
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+  - Linrong Li
+thanks: "Code and data are available at: https://github.com/linforestli/homosexual_attitude.git "
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
-format: pdf
+abstract: "This study investigates the attitudes of Americans towards the employment of homosexual individuals as teachers in colleges or universities. Using data from the U.S. General Society Survey and logistic regression analysis, the study explores factors that may influence these attitudes, such as sex, region, and political beliefs. This research addresses a gap in the literature, as previous studies have mainly focused on homosexual teachers in elementary and secondary education. [One sentence about the findings that I do not know right now]"
+format: 
+  pdf: 
+    documentclass: article
 number-sections: true
 bibliography: references.bib
 ---
@@ -19,37 +20,27 @@ bibliography: references.bib
 #| message: false
 
 library(tidyverse)
-library(palmerpenguins)
 ```
-
 
 # Introduction
 
-You can and should cross-reference sections and sub-sections. For instance, @sec-data and @sec-first-point. 
+In recent years, the issue of whether sexual orientation should be a factor in determining employment eligibility has been a controversial topic in the United States, particularly in the context of hiring homosexual teachers in universities. This study aims to investigate Americans' attitudes toward allowing homosexual individuals to teach in colleges or universities, with a specific focus on the factors that may influence these attitudes. Through examining factors such as sex, the region they were located, and political beliefs, this study seeks to provide a deeper understanding of the complexity of the debate and the varying opinions on the matter.
 
+To achieve the research objectives, a data set was first collected from the U.S. General Society Survey. Then, the data was cleaned and summarized by graphs and tables to illustrate the important features of the data. Furthermore, predicted probability models were established using logistic regression to predict the likelihood of the influence of the investigated factors on their attitudes toward allowing homosexual people to teach.
 
+\[This will be a paragraph talking about the findings; have not finished the research so do not know the findings yet\]
+
+Currently, most studies focused on the employment of homosexual teachers in elementary and secondary education and exploring the influence of homosexual teachers on younger children. The study addresses a significant gap in the literature on this topic, as research on Americans' attitudes toward the employment of homosexual teachers in universities remains limited. The findings of this study could potentially inform university policies and employment practices, particularly as institutions strive to create more inclusive and diverse environments.
+
+This paper is structured as follows. @sec-data provides an overview of the data set, summarizing the key features of the data set. @sec-model details the models used in this study. @sec-results presents the results of the study, while @sec-discussion discusses the findings and their potential implications for university policies and employment practices.
 
 # Data {#sec-data}
-
-Our data is of penguins (@fig-bills).
 
 ```{r}
 #| label: fig-bills
 #| fig-cap: Bills of penguins
 #| echo: false
-
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
 ```
-
-Talk more about it.
-
-Also bills and their average (@fig-billssssss). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work.)
 
 ```{r}
 #| label: fig-billssssss
@@ -57,40 +48,25 @@ Also bills and their average (@fig-billssssss). (You can change the height and w
 #| echo: false
 #| fig-width: 8
 #| fig-height: 4
-
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
 ```
 
-Talk way more about it. 
-
-
-
-# Model
+# Model {#sec-model}
 
 $$
-Pr(\theta | y) = \frac{Pr(y | \theta) Pr(\theta)}{Pr(y)}
-$$ {#eq-bayes}
+log({p \over 1-p}) = \beta_0 + \beta_1 \cdot x_1 
+\begin{cases}
+  1, & \text{if sex is female}\\
+  0, & \text{otherwise}
+\end{cases}
+$$ {#eq-sex}
 
-@eq-bayes seems useful, eh?
+@eq-sex models the relationship between sex and the probability female would allow a homosexual individual to teach in universities or colleges.
 
-Here's a dumb example of how to use some references: In paper we run our analysis in `R` [@citeR]. We also use the `tidyverse` which was written by @thereferencecanbewhatever If we were interested in baseball data then @citeLahman could be useful. 
+# Results {#sec-results}
 
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-# Discussion
+# Discussion {#sec-discussion}
 
 ## First discussion point {#sec-first-point}
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
 
 ## Second discussion point
 
@@ -98,21 +74,14 @@ If my paper were 10 pages, then should be be at least 2.5 pages. The discussion 
 
 ## Weaknesses and next steps
 
-Weaknesses and next steps should also be included.
-
 \newpage
 
 \appendix
 
-# Appendix {-}
-
+# Appendix {.unnumbered}
 
 # Additional details
 
-
 \newpage
 
-
 # References
-
-

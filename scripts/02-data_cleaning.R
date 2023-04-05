@@ -28,6 +28,10 @@ for (i in seq_along(cleaned_teach)) {
 
 cleaned_teach <- drop_na(cleaned_teach)
 
+cleaned_teach$prestg10 = as.numeric(cleaned_teach$prestg10)
+cleaned_teach$age = as.numeric(cleaned_teach$age)
+cleaned_teach$educ = as.numeric(cleaned_teach$educ)
+
 #### Save data ####
 # [...UPDATE THIS...]
 # change cleaned_data to whatever name you end up with at the end of cleaning
