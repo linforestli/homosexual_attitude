@@ -1,19 +1,46 @@
 #### Preamble ####
-# Purpose: Simulates... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Data: 11 February 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
+# Purpose: Simulates the data set to investigate the attitudes toward homosexual people teaching in higher education [...UPDATE THIS...]
+# Author: Linrong Li [...UPDATE THIS...]
+# Data: 13 April 2023 [...UPDATE THIS...]
+# Contact: linrongl.li@mail.utoronto.ca [...UPDATE THIS...]
 # License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Pre-requisites: None
 
 
 #### Workspace setup ####
 library(tidyverse)
-# [...UPDATE THIS...]
 
 #### Simulate data ####
-# [...ADD CODE HERE...]
+set.seed(418)
+simulated_data <-
+  tibble(
+    "id" = 1:100,
+    "Party" = sample(
+      x = c(
+        "Democrat",
+        "Republican"
+      ),
+      size = 100,
+      replace = TRUE),
+    "Class" = sample(
+      x = c(
+        "Lower class",
+        "Working class",
+        "Middle class",
+        "Upper class"
+      ),
+      size = 100,
+      replace = TRUE
+    ),
+    "Attitude" = sample(
+      x = c(
+        "Allowed",
+        "Not allowed"
+      ),
+      size = 100,
+      replace = TRUE
+    )
+  )
 
 
 

@@ -1,15 +1,13 @@
 ---
-title: "Americans' Attitudes Toward The Employment of Homosexual Individuals in Colleges or Universities"
-subtitle: "[one sentence of the findings from the paper]"
+title: "Americans' Attitudes Toward The Employment of Homosexual Individuals in Higher Education"
+subtitle: "Democrats from higher social class are more likely to allow homosexual to teach"
 author: 
   - Linrong Li
 thanks: "Code and data are available at: https://github.com/linforestli/homosexual_attitude.git "
 date: "`r Sys.time()`"
 date-format: "D MMMM YYYY"
-abstract: "This study investigates the attitudes of Americans towards the employment of homosexual individuals as teachers in colleges or universities. Using data from the U.S. General Society Survey and logistic regression analysis, the study explores factors that may influence these attitudes, such as sex, region, and political beliefs. This research addresses a gap in the literature, as previous studies have mainly focused on homosexual teachers in elementary and secondary education. [One sentence about the findings that I do not know right now]"
-format: 
-  pdf: 
-    documentclass: article
+abstract: "This study investigates the attitudes of Americans towards the employment of homosexual individuals as teachers in colleges or universities. Using data from the U.S. General Society Survey and logistic regression analysis, the study explores factors that may influence these attitudes, such as sex, region, and political beliefs. This research addresses a gap in the literature, as previous studies have mainly focused on homosexual teachers in elementary and secondary education. It was found that Democrats from higher social class are more likely to allow homosexual to teach in universities or colleges."
+format: pdf
 number-sections: true
 bibliography: references.bib
 ---
@@ -20,15 +18,22 @@ bibliography: references.bib
 #| message: false
 
 library(tidyverse)
+library(readxl)
+library(ggplot2)
+library(here)
+library(gtsummary)
+
+cleaned_teach <- read_xlsx(here::here("inputs/data/cleaned.xlsx"))
+data <- read_xlsx(here::here("inputs/data/cleaned.xlsx"))
 ```
 
 # Introduction
 
-In recent years, the issue of whether sexual orientation should be a factor in determining employment eligibility has been a controversial topic in the United States, particularly in the context of hiring homosexual teachers in universities. This study aims to investigate Americans' attitudes toward allowing homosexual individuals to teach in colleges or universities, with a specific focus on the factors that may influence these attitudes. Through examining factors such as sex, the region they were located, and political beliefs, this study seeks to provide a deeper understanding of the complexity of the debate and the varying opinions on the matter.
+In recent years, the issue of whether sexual orientation should be a factor in determining employment eligibility has been a controversial topic in the United States, particularly in the context of hiring homosexual teachers in universities. This study aims to investigate Americans' attitudes toward allowing homosexual individuals to teach in colleges or universities, with a specific focus on the factors that may influence these attitudes. Through examining factors such as social classes and political beliefs, this study seeks to provide a deeper understanding of the complexity of the debate and the varying opinions on the matter.
 
 To achieve the research objectives, a data set was first collected from the U.S. General Society Survey. Then, the data was cleaned and summarized by graphs and tables to illustrate the important features of the data. Furthermore, predicted probability models were established using logistic regression to predict the likelihood of the influence of the investigated factors on their attitudes toward allowing homosexual people to teach.
 
-\[This will be a paragraph talking about the findings; have not finished the research so do not know the findings yet\]
+It was found that people who are democrats are more likely to allow homosexual people to teach in universities or colleges. Additionally, upper class people are more like to allow them to teach. These two factors also have combined effects on increasing the probability of allow homosexual individuals to teach in higher education institutions.
 
 Currently, most studies focused on the employment of homosexual teachers in elementary and secondary education and exploring the influence of homosexual teachers on younger children. The study addresses a significant gap in the literature on this topic, as research on Americans' attitudes toward the employment of homosexual teachers in universities remains limited. The findings of this study could potentially inform university policies and employment practices, particularly as institutions strive to create more inclusive and diverse environments.
 
@@ -36,51 +41,220 @@ This paper is structured as follows. @sec-data provides an overview of the data 
 
 # Data {#sec-data}
 
+## Data source and collection
+
+The General Social Survey (@norc), which tracks public opinion and behavior in the United States, is the survey that is of interest in this report. The NORC at the University of Chicago has been conducting it since 1972 with funding from the National Science Foundation (NSF), with the goal of minimizing all changes by using the same sampling and questioning techniques.
+
+R (@citeR) was utilized to analyze the data set. All the interested variables were first selected from the GSS Explorer website and then added to an extract. The extract was downloaded and saved in the inputs as a Excel workbook file. Using package readxl (@readxl), the Excel Workbook file was imported to R. Tidyverse (@tidyverse) was used to clean the data, and ggplot2 (@ggplot2) was used to graph them.
+
+## Methodology
+
+The GSS has always relied heavily on in-person data collection as its main method of data collection. However, the 2021 GSS data collection used a mail-to-web approach (supplemented by phone for respondents who wanted the choice) instead of its customary in-person interviews to protect the health of staff and respondents during the COVID-19 pandemic. Utilizing commercially accessible phone number matches for addresses in the sample or incoming phone contact, outreach was carried out via mail and phone. The GSS staff revised the mail-based outreach to respondents to inform them of the GSS and encourage them to engage online or by phone. Selected households were urged to complete the 2021 GSS survey by sending them postcards, invitation packages, and reminder letters utilizing a combination of USPS and FedEx over the data collecting period. The sample was made available in three phases, with each batch's review of the responder recruitment process allowing it to be adjusted for the next batch.
+
+Between December 1, 2020, and May 3, 2021, 4,032 questionnaires were completed, with a response rate of 17.4%. 88.3% of individuals who responded to the survey did so online, and 11.7% answered the phone.
+
+## Key Elements
+
+The GSS gathers information about modern American culture in order to track and analyze trends in beliefs, attitudes, and actions. The GSS includes a core set of questions on demographics, behavior, and attitudes in addition to areas of interest. Civil freedoms, crime and violence, intergroup tolerance, morality, national spending priorities, psychological well-being, social mobility, stress and traumatic experiences are some of the subjects explored. The survey data includes 735 variables and 4,032 respondents.
+
+## Variable selections
+
+Two variables were selected as the major focus of this analysis, which are their party preferences and social classes. Other variables were included in the dataset but not used in the analysis. This analysis focuses on exploring the relationship between people's attitudes toward allowing homosexual people to teach in high education institutions and their belonged parties and social classes.
+
+To measure people's attitudes toward allowing homosexual people to teach, the orginial survey asked the question as follows: "Should such a person (a man who admits that he Is a homosexual) be allowed to teach in a college or university, or not?" Respodents were given the options of allowed and not allowed. They could also choose "inapplicable", "no answer", "do not know", and "skipped on the web". It is worth noticing that this question was only included in Ballot A and C in 2021.
+
+To investigate the specific party the respondents belong to, the survey asked "Generally speaking, do you usually think of yourself as a Republican, Democrat, Independent, or what?" The options ranging from "strong democrat", "not very strong democrat", "Independent, ckise to democrat", "indepent" with all levels applied the same to the republican. They could also choose other party, or refuse to answer the question by choosing "no answer" or "do not know". Social classes were measured based on self-report. Respondents could choose from "lower class", "working class", "middle class", "upper class", and "no class" though no one chose "no class" in 2021. They can also choose to not answer this question.
+
+For the purpose of this analysis, the party variable had been recoded to a binary outcome of 'democrat" or "republican". All independent answers were ditched. The analysis also eliminated all data entries that did not answer to all of the questions.
+
+The following graphs (@fig-allow, @fig-party, and @fig-class) had showed a summary of distribution of the variables in the dataset.
+
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: fig-allow
+#| fig-cap: Distribution of general attitudes
 #| echo: false
+#| warning: false
+graph_data <- data %>% group_by(colhomo) %>% summarise(n = n()) %>% ungroup()
+gen_graph <- ggplot(graph_data, aes(x=colhomo, y=n)) +
+    geom_bar(stat="identity") + labs(x = "Attitudes", y = "Number of attitudes")
+gen_graph
 ```
 
 ```{r}
-#| label: fig-billssssss
-#| fig-cap: More bills of penguins
+#| label: fig-party
+#| fig-cap: Distribution of party
 #| echo: false
-#| fig-width: 8
-#| fig-height: 4
+#| warning: false
+party <- data %>% group_by(partyid, colhomo) %>% summarise(n = n()) %>% ungroup()
+party_graph <- ggplot(party, aes(x=partyid, y=n, fill=colhomo)) +
+    geom_bar(stat="identity") + labs(x = "Party", y = "Number of attitudes") + theme(legend.title=element_blank())
+party_graph
+```
+
+```{r}
+#| label: fig-class
+#| fig-cap: Distribution of class
+#| echo: false
+#| warning: false
+class_data <- data %>% group_by(class_, colhomo) %>% summarise(n = n()) %>% ungroup()
+class_data$class_ <- factor(class_data$class_, levels = c("Lower class", "Working class", "Middle class", "Upper class"))
+class_graph <- ggplot(class_data, aes(x=class_, y=n, fill=colhomo)) +
+    geom_bar(stat="identity", position = position_dodge()) + labs(x = "Class", y = "Number of attitudes") + theme(legend.title=element_blank())
+class_graph
 ```
 
 # Model {#sec-model}
 
+To further explore the relationship between the probability of one individual answering "allowed" and their party preferences and social classes, a binomial logistic regression model (@eq-party-class) was established as follows:
+
 $$
-log({p \over 1-p}) = \beta_0 + \beta_1 \cdot x_1 
+log({p \over 1-p}) = \beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \beta_3 \cdot x_3 + \beta_4 \cdot x_4 + \beta_5 \cdot x_5
+\\where \ x_1
 \begin{cases}
-  1, & \text{if sex is female}\\
+  1, & \text{if party is lower class}\\
   0, & \text{otherwise}
 \end{cases}
-$$ {#eq-sex}
+\\
+\ x_2
+\begin{cases}
+  1, & \text{if party is middle class}\\
+  0, & \text{otherwise}
+\end{cases}
+\\
+\ x_3
+\begin{cases}
+  1, & \text{if party is upper class}\\
+  0, & \text{otherwise}
+\end{cases}
+\\
+\ x_4
+\begin{cases}
+  1, & \text{if party is working class}\\
+  0, & \text{otherwise}
+\end{cases}
+\\
+\ x_5
+\begin{cases}
+  1, & \text{if party is Republican}\\
+  0, & \text{otherwise}
+\end{cases}
+$$ {#eq-party-class}
 
-@eq-sex models the relationship between sex and the probability female would allow a homosexual individual to teach in universities or colleges.
+Binomial logistic regression was used because the variables investigates only had binary outcomes. It is often used to model the probability of certain event happening based on predictor variables. In this case, the predictor variables are parties and social classes, and the probability to find out is the chance one individual would allow a homosexual person to teach in higher education institutions.
+
+The two variables were chosen because from the graphs in the data section, it could be found that some classes or parties had higher proportions that did not allow a homosexual individual to teach. To further investigate the impact of these variables and discover whether they are important determinator in the problem, the model is therefore establish.
 
 # Results {#sec-results}
 
+The coefficients that calculated based on the dataset are summarized in the following table (@tbl-sum). By calculating the confidence intervals for these coefficients, it could be found that they are statistically significant to conclude that parties and social classes will have an impact on the probability of one individual allowing homosexual to teach.
+
+```{r}
+#| label: tbl-sum
+#| warning: false
+#| echo: false
+#| tbl-cap: Summary of model
+
+upper_dem_yes_count <- sum(ifelse(cleaned_teach$colhomo == "ALLOWED" & 
+                                       cleaned_teach$partyid == "Democrat" &
+                                       cleaned_teach$class_ == "Upper class", 1, 0))
+upper_rep_yes_count <- sum(ifelse(cleaned_teach$colhomo == "ALLOWED" & 
+                                     cleaned_teach$partyid == "Republican" &
+                                     cleaned_teach$class_ == "Upper class", 1, 0))
+upper_dem_no_count <- sum(ifelse(cleaned_teach$colhomo == "NOT ALLOWED" & 
+                                      cleaned_teach$partyid == "Democrat" &
+                                      cleaned_teach$class_ == "Upper class", 1, 0))
+upper_rep_no_count <- sum(ifelse(cleaned_teach$colhomo == "NOT ALLOWED" & 
+                                    cleaned_teach$partyid == "Republican" &
+                                    cleaned_teach$class_ == "Upper class", 1, 0))
+middle_dem_yes_count <- sum(ifelse(cleaned_teach$colhomo == "ALLOWED" & 
+                                        cleaned_teach$partyid == "Democrat" &
+                                        cleaned_teach$class_ == "Middle class", 1, 0))
+middle_rep_yes_count <- sum(ifelse(cleaned_teach$colhomo == "ALLOWED" & 
+                                      cleaned_teach$partyid == "Republican" &
+                                      cleaned_teach$class_ == "Middle class", 1, 0))
+middle_dem_no_count <- sum(ifelse(cleaned_teach$colhomo == "NOT ALLOWED" & 
+                                       cleaned_teach$partyid == "Democrat" &
+                                       cleaned_teach$class_ == "Middle class", 1, 0))
+middle_rep_no_count <- sum(ifelse(cleaned_teach$colhomo == "NOT ALLOWED" & 
+                                     cleaned_teach$partyid == "Republican" &
+                                     cleaned_teach$class_ == "Middle class", 1, 0))
+lower_dem_yes_count <- sum(ifelse(cleaned_teach$colhomo == "ALLOWED" & 
+                                       cleaned_teach$partyid == "Democrat" &
+                                       cleaned_teach$class_ == "Lower class", 1, 0))
+lower_rep_yes_count <- sum(ifelse(cleaned_teach$colhomo == "ALLOWED" & 
+                                     cleaned_teach$partyid == "Republican" &
+                                     cleaned_teach$class_ == "Lower class", 1, 0))
+lower_dem_no_count <- sum(ifelse(cleaned_teach$colhomo == "NOT ALLOWED" & 
+                                      cleaned_teach$partyid == "Democrat" &
+                                      cleaned_teach$class_ == "Lower class", 1, 0))
+lower_rep_no_count <- sum(ifelse(cleaned_teach$colhomo == "NOT ALLOWED" & 
+                                    cleaned_teach$partyid == "Republican" &
+                                    cleaned_teach$class_ == "Lower class", 1, 0))
+working_dem_yes_count <- sum(ifelse(cleaned_teach$colhomo == "ALLOWED" & 
+                                         cleaned_teach$partyid == "Democrat" &
+                                         cleaned_teach$class_ == "Working class", 1, 0))
+working_rep_yes_count <- sum(ifelse(cleaned_teach$colhomo == "ALLOWED" & 
+                                       cleaned_teach$partyid == "Republican" &
+                                       cleaned_teach$class_ == "Working class", 1, 0))
+working_dem_no_count <- sum(ifelse(cleaned_teach$colhomo == "NOT ALLOWED" & 
+                                        cleaned_teach$partyid == "Democrat" &
+                                        cleaned_teach$class_ == "Working class", 1, 0))
+working_rep_no_count <- sum(ifelse(cleaned_teach$colhomo == "NOT ALLOWED" & 
+                                      cleaned_teach$partyid == "Republican" &
+                                      cleaned_teach$class_ == "Working class", 1, 0))
+
+# allow_sex_count <- data.frame(
+#   party = c(0, 1),
+#   yes = c(female_yes_count, male_yes_count),
+#   no = c(female_no_count, male_no_count)
+# )
+# allow_sex_count$resp <- cbind(allow_sex_count$yes, allow_sex_count$no)
+
+allow_party_class_count <- data.frame(
+  class = factor(c("Lower class", "Working class", "Middle class", "Upper class")),
+  party = c(0, 0, 0, 0, 1, 1, 1, 1),
+  yes = c(lower_dem_yes_count, working_dem_yes_count,
+          middle_dem_yes_count, upper_dem_yes_count,
+          lower_rep_yes_count, working_rep_yes_count,
+          middle_rep_yes_count, upper_rep_yes_count),
+  no = c(lower_dem_no_count, working_dem_no_count,
+         middle_dem_no_count, upper_dem_no_count,
+         lower_rep_no_count, working_rep_no_count,
+         middle_rep_no_count, upper_rep_no_count)
+)
+allow_party_class_count$resp <- cbind(allow_party_class_count$yes, allow_party_class_count$no)
+
+model1 <- glm(resp ~ class + factor(party), family = binomial(link = logit),
+              data = allow_party_class_count)
+tbl1 <- tbl_regression(model1)
+tbl1
+```
+
+According to the model, the probability of an individual selr-identified as republican to allow a homosexual individual to teach is 75.40%, while the probability of a democrat to allow one to teach is 87.80%. Additionally, when taking the social class into consideration, the probability of one who self-identified as Republican and of a social class of working class is 88.31%, while the chance for a democrat from the same social class is 94.66%.
+
+While keeping the party as constant, for people who are republican, people who self-identified as upper class have a probability of 94.14% of allowing a homesexual to teach, which is about 6% higher than those from working class. For people who are democrat, the probability of one from upper class to allow homosexuals to teach is 97.42%, which is about 3% higher than those from working class.
+
 # Discussion {#sec-discussion}
 
-## First discussion point {#sec-first-point}
+Genrally, people are supportive about homosexual's employment as instructors in higher education institutes. However, there are still slight differences in party and social classes.
 
-## Second discussion point
+## Party
 
-## Third discussion point
+The model section of a study has revealed that democrats are more likely to allow homosexual people to teach, indicating their openness towards diverse sexual orientations. This finding is significant in demonstrating the political stance that democrats take towards the LGBT community, and it suggests that they are more accepting and supportive of their rights and well-being as compared to other political parties. This progressive stance towards diversity in sexual orientation is a reflection of their open-mindedness and acceptance of people from all walks of life.
+
+To me, it is not a surprising result. Democrats in the United States have always been showing a open attitude to LGBTQ+ community by supporting legistrations of protecting LGBTQ rights (@BBC). It is more interesting to explore why republicans tend to reject them. Evidences could be found from their attitudes on the same legislation of LGBTQ+ rights. Republicans claim that they believe legislation of LGBTQ+ rights might have serious violations on religious freedom and would change the mainstream value about marriage and biological facts about sex differences (@BBC). In my opinion, Republicans are more conservative. And senators that public show their conservative attitudes would also influence ordinary people's opinions because of their party bonds.
+
+## Social class
+
+How social classes influence people's attitudes on homosexual employment in higher education institutions was not as significant as it of party. However, it could still be noticed that people from higher social classes have higher tendency of accepting homosexual people to teach. This trend can be attributed to the fact that people from higher social classes tend to be more educated and exposed to diverse perspectives. They are also more likely to have interacted with individuals from different backgrounds, including the LGBTQ+ community. As a result, they are more likely to have a broader understanding and appreciation of diversity.
+
+Furthermore, people from higher social classes tend to be more progressive and liberal in their beliefs. They are more likely to support equal rights and opportunities for all, including the LGBTQ+ community. This is in contrast to people from lower social classes who may hold more traditional and conservative values.
 
 ## Weaknesses and next steps
 
-\newpage
+One significant weakness of this analysis is that in the original survey, people were only asked about their attitudes toward employing a homosexual male. Consequently, it might not be fair to apply people's attitudes toward homosexual male to the entire homosexual community. The original question could be altered or added to be more inclusive so that more generalized and confident conclusion could be drawn. Additionally, a binary outcome may not be able to fully reflect people's attitudes. For questions such as this, it might be important to provide a scale of options to allow the respondents to choose from. This could help to more accurately reflect people's attitudes.
 
-\appendix
-
-# Appendix {.unnumbered}
-
-# Additional details
+This analysis was also very specific to social classes and parties. To better generalize factors that might influence people's attitudes, more factors can be included, such as education, age, and income. If there is opportunities in the future, this analysis will try to cover more variables to dig more about the current public reception about the employment of homosexual people in higher education institutions.
 
 \newpage
 
