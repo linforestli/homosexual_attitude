@@ -108,8 +108,10 @@ class_graph
 To further explore the relationship between the probability of one individual answering "allowed" and their party preferences and social classes, a binomial logistic regression model (@eq-party-class) was established as follows:
 
 $$
-log({p \over 1-p}) = \beta_0 + \beta_1 \cdot x_1 + \beta_2 \cdot x_2 + \beta_3 \cdot x_3 + \beta_4 \cdot x_4 + \beta_5 \cdot x_5
-\\where \ x_1
+log({p \over 1-p}) = \beta_0 + \beta_1 \cdot x_1 + 
+\\ \beta_2 \cdot x_2 + \beta_3 \cdot x_3 + 
+\\ \beta_4 \cdot x_4 + \beta_5 \cdot x_5
+\\ where \ x_1
 \begin{cases}
   1, & \text{if party is lower class}\\
   0, & \text{otherwise}
